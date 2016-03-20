@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <context:property-placeholder location="file:${care.config.path}*.properties"/>
+    <!-- The controllers are autodetected POJOs labeled with the @Controller annotation. -->
+    <context:component-scan base-package="com.care" use-default-filters="false">
+        <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+    </context:component-scan>
+
+    <bean class="com.care.customlization.jsondoc.CareDocController" id="documentationController">
+        <property name="version" value="1.0"/>
+        <property name="basePath" value="${jsondoc.base.path}"/>
+        <property name="packages">
+            <list>
+                <value>com.care.controller</value>
+            </list>
+        </property>
+    </bean>
+    <mvc:annotation-driven conversion-service="applicationConversionService"/>
+    <context:annotation-config/>
+    <mvc:resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
+    <mvc:default-servlet-handler/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/ws/**"/>
+            <bean class="com.care.controller.interceptors.ApiInvokeIntercepor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/web/**"/>
+            <bean class="com.care.controller.webinvoke.WebInvokeInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!-- Resolves localized messages*.properties and application.properties files in the application to allow for internationalization.
+    The messages*.properties files translate Roo generated messages which are part of the admin interface, the 
+    application.properties resource bundle localizes all application specific messages such as entity names and menu items. -->
+    <bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource" id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application" p:fallbackToSystemLocale="false"/>
+
+    <bean class="org.springframework.web.servlet.handler.HandlerExceptionResolverComposite" id="compositeExceptionResolver">
+        <property name="exceptionResolvers">
+            <list>
+                <bean class="com.care.controller.interceptors.ExceptionResolver"/>
+                <bean class="com.care.controller.interceptors.DefaultExceptionResolver"/>
+            </list>
+        </property>
+        <property name="order" value="0"/>
+    </bean>
+    <bean class="com.care.controller.interceptors.ExceptionResolver"/>
+    <!-- Enable this for integration of file upload functionality -->
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver"/>
+    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="tilesViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
+    </bean>
+    <bean class="com.care.controller.ApplicationConversionServiceFactoryBean" id="applicationConversionService"/>
+
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles-definitions.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+        <property name="order" value="1" />
+    </bean>
+</beans>
