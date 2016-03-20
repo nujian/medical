@@ -3,6 +3,7 @@ package com.care.controller;
 import com.care.controller.result.ResponseEntityUtils;
 import com.care.controller.result.ResultBean;
 import com.care.domain.Comment;
+import com.care.domain.MedicalReport;
 import com.care.domain.Order;
 import com.care.domain.User;
 import com.care.domain.embeddables.Location;
@@ -90,7 +91,7 @@ public class OrderController {
     public ResponseEntity<String> add(@PathVariable("id") Integer id,HttpServletRequest request) throws CareException {
         User current = securityService.getCurrentLoginUser(request);
         String[] inclends = new String[]{"user","nurse","addressPic","comments"};
-        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.findOrder(id,current),inclends).toJson());
+        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.findOrder(id, current),inclends).toJson());
     }
 
     @ApiMethod(
@@ -186,7 +187,7 @@ public class OrderController {
         User currentUser = securityService.getCurrentLoginUser(request);
         String[] inclends = new String[]{"addressPic","nurse"};
         String[] exclends = new String[]{""};
-        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.cancel(orderId,currentUser,memo),inclends,exclends).toJson());
+        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.cancel(orderId, currentUser, memo),inclends,exclends).toJson());
     }
 
     @ApiMethod(
@@ -240,6 +241,22 @@ public class OrderController {
         String[] inclends = new String[]{"order.id"};
         String[] exclends = new String[]{"order.*"};
         return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(comments,inclends,exclends).toJson());
+    }
+
+    @ApiMethod(
+            path = "/orders/medicalreport/upload",
+            verb = ApiVerb.POST,
+            description = "上传体检报告",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @ApiHeaders(headers = {
+            @ApiHeader(name = "USER_LOGIN_TOKEN", description = "检测用户登陆的token")
+    })
+    @RequestMapping(value = "/medicalreport/upload", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiResponseObject(sample = "")
+    public ResponseEntity<String> commentList(HttpServletRequest request) throws Exception {
+        User nurse = securityService.getCurrentLoginUser(request);
+        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.uploadReport(nurse,new MedicalReport())).toJson());
     }
 
 }

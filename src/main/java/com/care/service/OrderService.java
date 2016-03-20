@@ -1,6 +1,7 @@
 package com.care.service;
 
 import com.care.domain.Comment;
+import com.care.domain.MedicalReport;
 import com.care.domain.Order;
 import com.care.domain.User;
 import com.care.domain.embeddables.Location;
@@ -41,4 +42,7 @@ public interface OrderService {
     List<Order> findOrders(Integer page, Integer count);
 
     Order cancel(Integer orderId, User currentUser, String memo) throws EntityNotFoundException, NoPermissionsException, OrderStatusErrorException;
+
+    //上传体检报告
+    MedicalReport uploadReport(User user,MedicalReport report);
 }

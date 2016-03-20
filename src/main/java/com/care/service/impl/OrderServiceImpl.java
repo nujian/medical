@@ -323,4 +323,9 @@ public class OrderServiceImpl implements OrderService {
         log.setMemo(memo);
         log.persist();
     }
+
+    public MedicalReport uploadReport(User user,MedicalReport report){
+        //
+        return null;
+    }
 }
