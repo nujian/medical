@@ -122,7 +122,7 @@ public class UserController {
     public
     @ApiResponseObject(sample = "")
     ResponseEntity<String> profile(@PathVariable("id") Integer id) throws CareException {
-        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(userService.wrapUserProfile(id), null,null,"User","yyyy-MM-dd").toJson());
+        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(userService.load(id), null, null,"User","yyyy-MM-dd").toJson());
     }
 
     @ApiMethod(
