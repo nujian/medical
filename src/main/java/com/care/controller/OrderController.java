@@ -244,7 +244,7 @@ public class OrderController {
     }
 
     @ApiMethod(
-            path = "/orders/medicalreport/upload",
+            path = "/orders/report/upload",
             verb = ApiVerb.POST,
             description = "上传体检报告",
             produces = {MediaType.APPLICATION_JSON_VALUE}
@@ -252,11 +252,32 @@ public class OrderController {
     @ApiHeaders(headers = {
             @ApiHeader(name = "USER_LOGIN_TOKEN", description = "检测用户登陆的token")
     })
-    @RequestMapping(value = "/medicalreport/upload", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/report/upload", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiResponseObject(sample = "")
-    public ResponseEntity<String> commentList(HttpServletRequest request) throws Exception {
+    public ResponseEntity<String> commentList(
+            HttpServletRequest request,
+            MedicalReport report,
+            @ApiParam(paramType = ApiParamType.QUERY, name = "temperature", description = "体温", required = true)
+            @RequestParam(value = "temperature",required = true) String temperature,
+            @ApiParam(paramType = ApiParamType.QUERY, name = "heartRate", description = "心率", required = true)
+            @RequestParam(value = "heartRate",required = true) String heartRate,
+            @ApiParam(paramType = ApiParamType.QUERY, name = "fvc", description = "肺活量", required = true)
+            @RequestParam(value = "fvc",required = true) String fvc,
+            @ApiParam(paramType = ApiParamType.QUERY, name = "heartMurmur", description = "心脏杂音(T/F)", required = true)
+            @RequestParam(value = "heartMurmur",required = true) String heartMurmur,
+            @ApiParam(paramType = ApiParamType.QUERY, name = "cataract", description = "白内障(T/F)", required = true)
+            @RequestParam(value = "cataract",required = true) String cataract,
+            @ApiParam(paramType = ApiParamType.QUERY, name = "pictures[].file", description = "报告图片", required = false)
+            @RequestParam(value = "pictures[].file",required = false) String reportPic,
+            //订单Id
+            @ApiParam(paramType = ApiParamType.QUERY, name = "orderId", description = "订单Id", required = true)
+            @RequestParam(value = "orderId",required = true) Integer orderId
+            ) throws Exception {
+        if(orderId != null){
+            report.setOrder(orderService.findOrder(orderId));
+        }
         User nurse = securityService.getCurrentLoginUser(request);
-        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.uploadReport(nurse,new MedicalReport())).toJson());
+        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.uploadReport(nurse,report)).toJson());
     }
 
 }
