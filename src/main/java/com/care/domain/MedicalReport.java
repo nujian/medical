@@ -144,4 +144,10 @@ public class MedicalReport extends BaseModel{
     public void setCataract(Boolean cataract) {
         this.cataract = cataract;
     }
+
+    public static MedicalReport getReportByOrderId(Integer orderId){
+        String query = "from MedicalReport mr where mr.order.id=:order_id ";
+        List<MedicalReport> reports = entityManager().createQuery(query,MedicalReport.class).setParameter("order_id",orderId).getResultList();
+        return CollectionUtils.isNotEmpty(reports)?reports.get(0):null;
+    }
 }

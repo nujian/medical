@@ -91,8 +91,9 @@ public class OrderController {
     @ApiResponseObject(sample = "")
     public ResponseEntity<String> add(@PathVariable("id") Integer id,HttpServletRequest request) throws CareException {
         User current = securityService.getCurrentLoginUser(request);
-        String[] inclends = new String[]{"user","nurse","addressPic","comments"};
-        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.findOrder(id, current),inclends).toJson());
+        String[] inclends = new String[]{"user","nurse","addressPic","comments","report.id"};
+        String[] exclends = new String[]{"report.*"};
+        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.findOrder(id, current),inclends,exclends).toJson());
     }
 
     @ApiMethod(

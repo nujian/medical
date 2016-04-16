@@ -92,6 +92,13 @@ public class Order extends BaseModel {
         return null;
     }
 
+    @Transient
+    private MedicalReport report;
+
+    public MedicalReport getReport() {
+        return MedicalReport.getReportByOrderId(this.getId());
+    }
+
     public User getUser() {
         return user;
     }
