@@ -325,6 +325,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public MedicalReport uploadReport(User user,MedicalReport report){
+        if(report.getId() != null){
+            return MedicalReport.entityManager().find(MedicalReport.class,report.getId());
+        }
         MedicalReport reportTarget = new MedicalReport();
         reportTarget.setCataract(report.getCataract());
         reportTarget.setHeartMurmur(report.getHeartMurmur());

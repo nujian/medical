@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -257,16 +258,18 @@ public class OrderController {
     public ResponseEntity<String> commentList(
             HttpServletRequest request,
             MedicalReport report,
+            @ApiParam(paramType = ApiParamType.QUERY, name = "id", description = "报告Id", required = false)
+            @RequestParam(value = "id",required = false) Integer id,
             @ApiParam(paramType = ApiParamType.QUERY, name = "temperature", description = "体温", required = true)
-            @RequestParam(value = "temperature",required = true) String temperature,
+            @RequestParam(value = "temperature",required = true) BigDecimal temperature,
             @ApiParam(paramType = ApiParamType.QUERY, name = "heartRate", description = "心率", required = true)
-            @RequestParam(value = "heartRate",required = true) String heartRate,
+            @RequestParam(value = "heartRate",required = true) BigDecimal heartRate,
             @ApiParam(paramType = ApiParamType.QUERY, name = "fvc", description = "肺活量", required = true)
-            @RequestParam(value = "fvc",required = true) String fvc,
+            @RequestParam(value = "fvc",required = true) BigDecimal fvc,
             @ApiParam(paramType = ApiParamType.QUERY, name = "heartMurmur", description = "心脏杂音(T/F)", required = true)
-            @RequestParam(value = "heartMurmur",required = true) String heartMurmur,
+            @RequestParam(value = "heartMurmur",required = true) Boolean heartMurmur,
             @ApiParam(paramType = ApiParamType.QUERY, name = "cataract", description = "白内障(T/F)", required = true)
-            @RequestParam(value = "cataract",required = true) String cataract,
+            @RequestParam(value = "cataract",required = true) Boolean cataract,
             @ApiParam(paramType = ApiParamType.QUERY, name = "pictures[].file", description = "报告图片", required = false)
             @RequestParam(value = "pictures[].file",required = false) String reportPic,
             //订单Id
