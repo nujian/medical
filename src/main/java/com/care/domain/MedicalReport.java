@@ -21,12 +21,13 @@ import java.util.List;
 @Where(clause = "is_deleted=0")
 public class MedicalReport extends BaseModel{
 
+    @JSON(include = true)
     @Transient
     private List<Picture> pictures;
 
     public List<Picture> getPictures() {
-        if(CollectionUtils.isNotEmpty(this.reportPictures)){
-            List<Picture> pictures = new ArrayList<Picture>(Collections2.transform(this.getReportPictures(), new Function<MedicalReportPicture, Picture>() {
+        if(CollectionUtils.isNotEmpty(getReportPictures())){
+            List<Picture> pictures = new ArrayList<Picture>(Collections2.transform(getReportPictures(), new Function<MedicalReportPicture, Picture>() {
                 @Override
                 public Picture apply(MedicalReportPicture reportPicture) {
                     if(reportPicture.getPicture() != null){
@@ -35,6 +36,7 @@ public class MedicalReport extends BaseModel{
                     return null;
                 }
             }));
+            return pictures;
         }
         return pictures;
     }
@@ -42,6 +44,15 @@ public class MedicalReport extends BaseModel{
     public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
     }
+
+    @JSON(include = false)
+    @Transient
+    private List<MedicalReportPicture> reportPictures;
+
+    public List<MedicalReportPicture> getReportPictures() {
+        return MedicalReportPicture.findReportPictures(this.getId());
+    }
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
@@ -54,11 +65,6 @@ public class MedicalReport extends BaseModel{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nurse_id")
     private User nurse;
-
-
-    @JSON(include = false)
-    @OneToMany(mappedBy = "report")
-    private List<MedicalReportPicture> reportPictures;
 
     //体温
     private BigDecimal temperature;
@@ -137,13 +143,5 @@ public class MedicalReport extends BaseModel{
 
     public void setCataract(Boolean cataract) {
         this.cataract = cataract;
-    }
-
-    public List<MedicalReportPicture> getReportPictures() {
-        return reportPictures;
-    }
-
-    public void setReportPictures(List<MedicalReportPicture> reportPictures) {
-        this.reportPictures = reportPictures;
     }
 }

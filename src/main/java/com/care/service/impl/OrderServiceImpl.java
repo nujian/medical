@@ -353,4 +353,9 @@ public class OrderServiceImpl implements OrderService {
         }
         return reportTarget;
     }
+
+    @Override
+    public MedicalReport findReport(Integer id) {
+        return MedicalReport.entityManager().find(MedicalReport.class,id);
+    }
 }

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.List;
 
 /**
  * Created by nujian on 16/4/16.
@@ -39,5 +40,12 @@ public class MedicalReportPicture extends BaseModel{
 
     public void setPicture(Picture picture) {
         this.picture = picture;
+    }
+
+    public static List<MedicalReportPicture> findReportPictures(Integer reportId){
+        String query = "from MedicalReportPicture mrp where mrp.report.id=:report_id order by mrp.createTime desc,mrp.id desc";
+        List<MedicalReportPicture> reportPictures = entityManager().createQuery(query,MedicalReportPicture.class)
+                .setParameter("report_id",reportId).getResultList();
+        return reportPictures;
     }
 }

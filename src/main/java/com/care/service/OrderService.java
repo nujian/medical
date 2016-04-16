@@ -45,4 +45,6 @@ public interface OrderService {
 
     //上传体检报告
     MedicalReport uploadReport(User user,MedicalReport report);
+
+    MedicalReport findReport(Integer id);
 }

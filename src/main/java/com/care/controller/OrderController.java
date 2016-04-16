@@ -270,14 +270,29 @@ public class OrderController {
             @ApiParam(paramType = ApiParamType.QUERY, name = "pictures[].file", description = "报告图片", required = false)
             @RequestParam(value = "pictures[].file",required = false) String reportPic,
             //订单Id
-            @ApiParam(paramType = ApiParamType.QUERY, name = "orderId", description = "订单Id", required = true)
-            @RequestParam(value = "orderId",required = true) Integer orderId
+            @ApiParam(paramType = ApiParamType.QUERY, name = "orderId", description = "订单Id", required = false)
+            @RequestParam(value = "orderId",required = false) Integer orderId
             ) throws Exception {
         if(orderId != null){
             report.setOrder(orderService.findOrder(orderId));
         }
         User nurse = securityService.getCurrentLoginUser(request);
-        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.uploadReport(nurse,report)).toJson());
+        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orderService.uploadReport(nurse,report),null,new String[]{"order.*"}).toJson());
     }
 
+    @ApiMethod(
+            path = "/orders/report/{id}",
+            verb = ApiVerb.GET,
+            description = "查看体检报告",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @ApiHeaders(headers = {
+            @ApiHeader(name = "USER_LOGIN_TOKEN", description = "检测用户登陆的token")
+    })
+    @RequestMapping(value = "/report/{id}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiResponseObject(sample = "")
+    public ResponseEntity<String> commentList(@PathVariable("id") Integer id) throws Exception {
+        MedicalReport report = orderService.findReport(id);
+        return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(report).toJson());
+    }
 }
