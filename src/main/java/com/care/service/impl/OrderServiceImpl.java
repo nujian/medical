@@ -333,6 +333,7 @@ public class OrderServiceImpl implements OrderService {
         if(order != null && order.getReport() == null){
             reportTarget.setCataract(report.getCataract());
             reportTarget.setHeartMurmur(report.getHeartMurmur());
+            reportTarget.setHeartRate(report.getHeartRate());
             reportTarget.setFvc(report.getFvc());
             reportTarget.setTemperature(report.getTemperature());
             reportTarget.persist();
