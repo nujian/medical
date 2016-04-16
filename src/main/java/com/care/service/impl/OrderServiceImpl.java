@@ -325,34 +325,34 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public MedicalReport uploadReport(User user,MedicalReport report){
-        if(report.getId() != null){
-            return MedicalReport.entityManager().find(MedicalReport.class,report.getId());
-        }
         MedicalReport reportTarget = new MedicalReport();
-        reportTarget.setCataract(report.getCataract());
-        reportTarget.setHeartMurmur(report.getHeartMurmur());
-        reportTarget.setFvc(report.getFvc());
-        reportTarget.setTemperature(report.getTemperature());
+        if(report.getId() != null){
+            reportTarget = MedicalReport.entityManager().find(MedicalReport.class,report.getId());
+        }
         Order order = report.getOrder();
-        if(order != null){
+        if(order != null && order.getReport() == null){
+            reportTarget.setCataract(report.getCataract());
+            reportTarget.setHeartMurmur(report.getHeartMurmur());
+            reportTarget.setFvc(report.getFvc());
+            reportTarget.setTemperature(report.getTemperature());
+            reportTarget.persist();
+            if(CollectionUtils.isNotEmpty(report.getPictures())){
+                List<byte[]> picByteArrayDataList = Picture.extractByteArrayDataFromPictureList(report.getPictures());
+                for (int i = 0; i < picByteArrayDataList.size(); i++) {
+                    MedicalReportPicture reportPicture = new MedicalReportPicture();
+                    reportPicture.setReport(reportTarget);
+                    reportPicture.persist();
+                    try {
+                        reportPicture.setPicture(pictureService.associate(reportPicture, picByteArrayDataList.get(i)));
+                        reportPicture.merge();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
             reportTarget.setNurse(order.getNurse());
             reportTarget.setUser(order.getUser());
             reportTarget.setOrder(order);
-        }
-        reportTarget.persist();
-        if(CollectionUtils.isNotEmpty(report.getPictures())){
-            List<byte[]> picByteArrayDataList = Picture.extractByteArrayDataFromPictureList(report.getPictures());
-            for (int i = 0; i < picByteArrayDataList.size(); i++) {
-                MedicalReportPicture reportPicture = new MedicalReportPicture();
-                reportPicture.setReport(reportTarget);
-                reportPicture.persist();
-                try {
-                    reportPicture.setPicture(pictureService.associate(reportPicture, picByteArrayDataList.get(i)));
-                    reportPicture.merge();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return reportTarget;
     }
