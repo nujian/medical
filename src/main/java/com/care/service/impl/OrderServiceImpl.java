@@ -169,18 +169,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrderByStatus(List<OrderStatus> statuses, Integer page, Integer count, SortType sort, Location location) {
+    public List<Order> getOrderByStatus(List<OrderStatus> statuses, boolean matched, Integer page, Integer count, SortType sort, Location location) {
         List<Order> orders = null;
-        String query = makeQuery4getOrderByStatus(sort);
+        String query = makeQuery4getOrderByStatus(sort,matched);
         orders = Order.entityManager().createQuery(query,Order.class).setParameter("statuses",statuses)
                 .setFirstResult((page - 1) * count).setMaxResults(count).getResultList();
         orders = processOrderDistance(orders,location);
         return orders;
     }
 
-    private String makeQuery4getOrderByStatus(SortType sort) {
+    private String makeQuery4getOrderByStatus(SortType sort, boolean matched) {
         StringBuffer query = new StringBuffer("from Order o ");
         query.append("where o.status in:statuses ");
+        if(matched){
+            query.append(" and o.nurse is not null ");
+        }else{
+            query.append(" and o.nurse is null ");
+        }
         query.append("order by ");
         if(sort != null){
             switch (sort){

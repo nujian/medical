@@ -28,7 +28,7 @@ public interface OrderService {
 
     List<Order> getOrderByUser(User user, Integer page, Integer count, Location location, UserOrderType userOrderType);
 
-    List<Order> getOrderByStatus(List<OrderStatus> statuses, Integer page, Integer count, SortType sort, Location location);
+    List<Order> getOrderByStatus(List<OrderStatus> statuses,boolean matched, Integer page, Integer count, SortType sort, Location location);
 
     Order match(Integer orderId, User nurse) throws CareException;
 

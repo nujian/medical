@@ -143,7 +143,7 @@ public class OrderController {
             @ApiParam(paramType = ApiParamType.QUERY, name = "latitude", description = "单页返回的记录条数", required = false)
             @RequestParam(value = "latitude",required = false) Double latitude
     ) throws CareException {
-        List<Order> orders = orderService.getOrderByStatus(Arrays.asList(OrderStatus.PAIED), PageCountUtils.processPage(page), PageCountUtils.processCount(count), SortType.TIME_DESC, location);
+        List<Order> orders = orderService.getOrderByStatus(Arrays.asList(OrderStatus.PAIED), false,PageCountUtils.processPage(page), PageCountUtils.processCount(count), SortType.TIME_DESC, location);
         return ResponseEntityUtils.wrapResponseEntity(ResultBean.wrap(orders,new String[]{"*.addressPic"}).toJson());
     }
 
