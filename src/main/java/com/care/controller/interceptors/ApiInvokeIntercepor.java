@@ -118,7 +118,7 @@ public class ApiInvokeIntercepor implements HandlerInterceptor {
             s.append(blank);
         }
         logger.info(s);
-//        System.out.println(s.toString());
+        System.out.println(s.toString());
 
         try {
             ApiInvokeLog invokeLog = new ApiInvokeLog();
