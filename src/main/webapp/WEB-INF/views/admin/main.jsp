@@ -87,68 +87,37 @@
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                   <h2 class="page-header">用户统计</h2>
                   <div class="row placeholders">
+
+                  <c:forEach items="${statistics}" var="sts">
                     <div class="col-xs-6 col-sm-3 placeholder">
-                      <h4>新增用户<span class="badge">42</span></h4>
-                      <span class="text-muted">Something else</span>
+                      <h4>${sts.name}<span class="badge">${sts.count}</span></h4>
+                      <span class="text-muted">${sts.memo}</span>
                     </div>
-                    <div class="col-xs-6 col-sm-3 placeholder">
-                      <h4>新增护士<span class="badge">42</span></h4>
-                      <span class="text-muted">Something else</span>
-                    </div>
-                    <div class="col-xs-6 col-sm-3 placeholder">
-                      <h4>昨日订单<span class="badge">42</span></h4>
-                      <span class="text-muted">Something else</span>
-                    </div>
-                    <div class="col-xs-6 col-sm-3 placeholder">
-                        <%--<img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">--%>
-                      <h4>昨日订单<span class="badge">42</span></h4>
-                      <span class="text-muted">Something else</span>
-                    </div>
+                  </c:forEach>
                   </div>
               </c:when>
               <c:when test="${mainType==2}">
                   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <h2 class="page-header">订单统计</h2>
                     <div class="row placeholders">
-                      <div class="col-xs-6 col-sm-3 placeholder">
-                        <h4>今日订单<span class="badge">42</span></h4>
-                        <span class="text-muted">Something else</span>
-                      </div>
-                      <div class="col-xs-6 col-sm-3 placeholder">
-                        <h4>昨日订单<span class="badge">42</span></h4>
-                        <span class="text-muted">Something else</span>
-                      </div>
-                      <div class="col-xs-6 col-sm-3 placeholder">
-                        <h4>上周订单<span class="badge">42</span></h4>
-                        <span class="text-muted">Something else</span>
-                      </div>
-                      <div class="col-xs-6 col-sm-3 placeholder">
-                          <%--<img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">--%>
-                        <h4>上月订单<span class="badge">42</span></h4>
-                        <span class="text-muted">Something else</span>
-                      </div>
+                      <c:forEach items="${statistics}" var="sts">
+                        <div class="col-xs-6 col-sm-3 placeholder">
+                          <h4>${sts.name}<span class="badge">${sts.count}</span></h4>
+                          <span class="text-muted">${sts.memo}</span>
+                        </div>
+                      </c:forEach>
                    </div>
               </c:when>
               <c:when test="${mainType==3}">
                     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                      <h2 class="page-header">订单统计</h2>
+                      <h2 class="page-header">提现订单统计</h2>
                       <div class="row placeholders">
+                      <c:forEach items="${statistics}" var="sts">
                         <div class="col-xs-6 col-sm-3 placeholder">
-                          <h4>今日提现总额<span class="badge">0.00</span></h4>
-                          <span class="text-muted">Something else</span>
+                          <h4>${sts.name}<span class="badge">${sts.count}</span></h4>
+                          <span class="text-muted">${sts.memo}</span>
                         </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                          <h4>本周提现总额<span class="badge">0.00</span></h4>
-                          <span class="text-muted">Something else</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                          <h4>本月提现总额<span class="badge">0.00</span></h4>
-                          <span class="text-muted">Something else</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                          <h4>上月提现总额<span class="badge">100</span></h4>
-                          <span class="text-muted">Something else</span>
-                        </div>
+                      </c:forEach>
                       </div>
               </c:when>
             </c:choose>
@@ -162,20 +131,23 @@
                 <table class="table table-striped">
                   <thead>
                   <tr>
-                    <th>用户Id </th>
+                    <th>序号</th>
+                    <%--<th>用户Id </th>--%>
                     <th>用户名称</th>
                     <th>用户类型</th>
                     <th>联系电话</th>
-                    <th>处理订单</th>
+                    <th>用户状态</th>
+                    <th>用户处理</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <c:forEach items="${users}" var="user">
+                  <c:forEach items="${users}" var="user" varStatus="status">
                     <tr>
-                      <td>${user.id}</td>
+                      <td>${status.index + 1}</td>
                       <td>${user.username}</td>
                       <td>${user.userType}</td>
                       <td>${user.mobile}</td>
+                      <td>${user.status}</td>
                       <td>
                         <div class="dropdown">
                           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -183,9 +155,9 @@
                             <span class="caret"></span>
                           </button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">编辑</a></li>
-                            <li><a href="#">停单</a></li>
-                            <li><a href="#">解封</a></li>
+                            <%--<li><a href="#">编辑</a></li>--%>
+                            <li><a href="/care/web/admin/index/user/stop/${user.id}/${mainType}">停单</a></li>
+                            <li><a href="/care/web/admin/index/user/unStop/${user.id}/${mainType}">解封</a></li>
                           </ul>
                         </div>
                       </td>
@@ -200,7 +172,8 @@
                 <table class="table table-striped">
                   <thead>
                   <tr>
-                    <th>订单ID </th>
+                    <th>序号</th>
+                    <%--<th>订单ID </th>--%>
                     <th>下单人</th>
                     <th>接单人</th>
                     <th>订单金额</th>
@@ -209,10 +182,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <c:forEach items="${orders}" var="order">
+                  <c:forEach items="${orders}" var="order" varStatus="status">
                     <tr>
-                      <td>${order.id}</td>
-                      <td>${order.user.username}</td>
+                      <td>${status.index + 1}</td>
+                      <%--<td>${order.id}</td>--%>
+                      <td>${order.user.username}(${order.user.mobile})</td>
                       <td>${order.nurse.username}</td>
                       <td>${order.cost}</td>
                       <td>${order.status}</td>
@@ -234,12 +208,13 @@
                 </table>
             </c:when>
             <c:when test="${mainType == 3}">
-              <h2 class="sub-header">订单管理</h2>
+              <h2 class="sub-header">提现订单管理</h2>
               <div class="table-responsive">
                 <table class="table table-striped">
                   <thead>
                   <tr>
-                    <th>用户Id </th>
+                    <th>序号</th>
+                    <%--<th>用户Id </th>--%>
                     <th>用户姓名</th>
                     <th>提现金额</th>
                     <th>银行账户</th>
@@ -248,13 +223,14 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <c:forEach items="${cashes}" var="cash">
+                  <c:forEach items="${cashes}" var="cash" varStatus="status">
                     <tr>
-                      <td>${cash.user.id}</td>
+                      <td>${status.index + 1}</td>
+                      <%--<td>${cash.user.id}</td>--%>
                       <td>${cash.user.username}</td>
                       <td>${cash.cost}</td>
-                      <td>${order.cardNum}</td>
-                      <td>${order.memo}</td>
+                      <td>${cash.cardNum}</td>
+                      <td>${cash.memo}</td>
                       <td>
                         <div class="dropdown">
                           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -313,6 +289,6 @@
     <script src="/care/js/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/care/js/ie10-viewport-bug-workaround.js"></script>
-  
+
 
 <div id="window-resizer-tooltip"><a href="http://v3.bootcss.com/examples/dashboard/#" title="Edit settings"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth"></span> x <span class="tooltipHeight" id="winHeight"></span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth"></span> x <span class="tooltipHeight" id="vpHeight"></span></div></body></html>
