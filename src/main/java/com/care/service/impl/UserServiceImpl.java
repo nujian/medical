@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
     private PictureService pictureService;
 
     @Override
+    public User findUser(Integer userId) {
+        return User.entityManager().find(User.class,userId);
+    }
+
+    @Override
     @Transactional
     public User reg(User user) throws BadVerifyCodeException {
         User target = null;
@@ -603,5 +608,40 @@ public class UserServiceImpl implements UserService {
         String query = "select count(ucl) from UserCashLog ucl";
         Integer count = UserCashLog.entityManager().createQuery(query,Long.class).getSingleResult().intValue();
         return count%initCount != 0?(count/initCount) + 1: count/initCount;
+    }
+
+    @Override
+    @Transactional
+    public void stopUser(Integer userId) {
+        User user = findUser(userId);
+        if(user != null){
+            user.setStatus(UserStatus.STOP);
+            user.merge();
+        }
+    }
+
+    @Override
+    public void unStopUser(Integer userId) {
+        User user = findUser(userId);
+        if(user != null && user.getStatus().equals(UserStatus.STOP)){
+            user.setStatus(UserStatus.NORMAL);
+            user.merge();
+        }
+    }
+
+    @Override
+    public Integer getStatisticsNum4UserByUnit(StatisticsUnit statisticsUnit) {
+        String query = "select count(u) from User u where u.createTime >:time";
+        return User.entityManager().createQuery(query,Long.class)
+                .setParameter("time",statisticsUnit.getQueryDate())
+                .getSingleResult().intValue();
+    }
+
+    @Override
+    public Integer getStatisticsNum4CashByUnit(StatisticsUnit statisticsUnit) {
+        String query = "select count(ul) from UserCashLog ul where ul.createTime >:time";
+        return UserCashLog.entityManager().createQuery(query,Long.class)
+                .setParameter("time", statisticsUnit.getQueryDate())
+                .getSingleResult().intValue();
     }
 }

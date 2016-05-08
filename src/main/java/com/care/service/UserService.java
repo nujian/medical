@@ -5,6 +5,7 @@ import com.care.domain.*;
 import com.care.domain.embeddables.Location;
 import com.care.domain.enums.ManageType;
 import com.care.domain.enums.SmsType;
+import com.care.domain.enums.StatisticsUnit;
 import com.care.exception.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ import java.util.List;
  * Created by nujian on 16/2/18.
  */
 public interface UserService {
+
+    User findUser(Integer userId);
 
     /**
      *
@@ -74,4 +77,12 @@ public interface UserService {
     Integer findUserTotalPage(Integer initCount);
 
     Integer findCashTotalPage(Integer initCount);
+
+    void stopUser(Integer userId);
+
+    void unStopUser(Integer userId);
+
+    Integer getStatisticsNum4UserByUnit(StatisticsUnit statisticsUnit);
+
+    Integer getStatisticsNum4CashByUnit(StatisticsUnit statisticsUnit);
 }

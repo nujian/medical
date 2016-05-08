@@ -7,6 +7,7 @@ import com.care.domain.User;
 import com.care.domain.embeddables.Location;
 import com.care.domain.enums.OrderStatus;
 import com.care.domain.enums.SortType;
+import com.care.domain.enums.StatisticsUnit;
 import com.care.domain.enums.UserOrderType;
 import com.care.exception.EntityNotFoundException;
 import com.care.exception.NoPermissionsException;
@@ -49,4 +50,6 @@ public interface OrderService {
     MedicalReport findReport(Integer id);
 
     Integer findOrderTotalPage(Integer initCount);
+
+    Integer getStatisticsNum4UserByUnit(StatisticsUnit statisticsUnit);
 }

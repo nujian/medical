@@ -2,10 +2,7 @@ package com.care.service.impl;
 
 import com.care.domain.*;
 import com.care.domain.embeddables.Location;
-import com.care.domain.enums.OrderStatus;
-import com.care.domain.enums.SortType;
-import com.care.domain.enums.UserOrderType;
-import com.care.domain.enums.UserType;
+import com.care.domain.enums.*;
 import com.care.exception.*;
 import com.care.exception.base.CareException;
 import com.care.service.OrderService;
@@ -229,6 +226,9 @@ public class OrderServiceImpl implements OrderService {
         if(!order.getStatus().equals(OrderStatus.PAIED)){
             throw new OrderStatusErrorException();
         }
+        if(nurse.getStatus().equals(UserStatus.STOP)){
+            throw new NurseStatusErrorException();
+        }
         order.setNurse(nurse);
         order.merge();
         return order;
@@ -373,5 +373,13 @@ public class OrderServiceImpl implements OrderService {
         String query = "select count(o) from Order o ";
         Integer count = Order.entityManager().createQuery(query,Long.class).getSingleResult().intValue();
         return count%initCount != 0?(count/initCount) + 1: count/initCount;
+    }
+
+    @Override
+    public Integer getStatisticsNum4UserByUnit(StatisticsUnit statisticsUnit) {
+        String query = "select count(o) from Order o where o.createTime >:time";
+        return Order.entityManager().createQuery(query,Long.class)
+                .setParameter("time",statisticsUnit.getQueryDate())
+                .getSingleResult().intValue();
     }
 }

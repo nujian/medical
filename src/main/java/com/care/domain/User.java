@@ -3,6 +3,7 @@ package com.care.domain;
 import com.care.domain.base.BaseModel;
 import com.care.domain.enums.Gender;
 import com.care.domain.enums.PictureType;
+import com.care.domain.enums.UserStatus;
 import com.care.domain.enums.UserType;
 import com.care.utils.DateUtils;
 import flexjson.JSON;
@@ -87,6 +88,10 @@ public class User extends BaseModel {
     @JSON(include = false)
     @OneToMany(mappedBy = "user")
     private List<UserAddress> address;
+
+    @Column(length = 100)
+    @Enumerated(EnumType.STRING)
+    private UserStatus status = UserStatus.NORMAL;
 
     @JSON(include = false)
     @Transient
@@ -194,6 +199,14 @@ public class User extends BaseModel {
 
     public void setAddress(List<UserAddress> address) {
         this.address = address;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
     public static User findUserByMobile(String mobile){
