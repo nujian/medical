@@ -367,4 +367,11 @@ public class OrderServiceImpl implements OrderService {
     public MedicalReport findReport(Integer id) {
         return MedicalReport.entityManager().find(MedicalReport.class,id);
     }
+
+    @Override
+    public Integer findOrderTotalPage(Integer initCount) {
+        String query = "select count(o) from Order o ";
+        Integer count = Order.entityManager().createQuery(query,Long.class).getSingleResult().intValue();
+        return count%initCount != 0?(count/initCount) + 1: count/initCount;
+    }
 }

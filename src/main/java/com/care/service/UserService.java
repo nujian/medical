@@ -70,4 +70,8 @@ public interface UserService {
     List<User> findUsers(Integer page, Integer count);
 
     List<UserCashLog> findUnhandelUserCashLog(Integer page, Integer count);
+
+    Integer findUserTotalPage(Integer initCount);
+
+    Integer findCashTotalPage(Integer initCount);
 }

@@ -47,4 +47,6 @@ public interface OrderService {
     MedicalReport uploadReport(User user,MedicalReport report);
 
     MedicalReport findReport(Integer id);
+
+    Integer findOrderTotalPage(Integer initCount);
 }

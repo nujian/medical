@@ -590,4 +590,18 @@ public class UserServiceImpl implements UserService {
         return UserCashLog.entityManager().createQuery(query,UserCashLog.class).setParameter("init_status",CashStatus.INIT)
                 .setFirstResult((page - 1)*count).setMaxResults(count).getResultList();
     }
+
+    @Override
+    public Integer findUserTotalPage(Integer initCount) {
+        String query = "select count(u) from User u ";
+        Integer count = User.entityManager().createQuery(query,Long.class).getSingleResult().intValue();
+        return count%initCount != 0?(count/initCount) + 1: count/initCount;
+    }
+
+    @Override
+    public Integer findCashTotalPage(Integer initCount) {
+        String query = "select count(ucl) from UserCashLog ucl";
+        Integer count = UserCashLog.entityManager().createQuery(query,Long.class).getSingleResult().intValue();
+        return count%initCount != 0?(count/initCount) + 1: count/initCount;
+    }
 }

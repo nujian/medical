@@ -157,6 +157,7 @@
           <!-- 订单管理 start  -->
           <c:choose>
             <c:when test="${mainType == 1}">
+
               <h2 class="sub-header">用户管理</h2>
               <div class="table-responsive">
                 <table class="table table-striped">
@@ -193,8 +194,32 @@
                   </c:forEach>
                   </tbody>
                 </table>
+                <!-- 分页管理 -->
+                <nav>
+                  <ul class="pagination">
+                    <li>
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                <!-- 分页管理 -->
+              </div>
+
             </c:when>
             <c:when test="${mainType == 2}">
+
               <h2 class="sub-header">订单管理</h2>
               <div class="table-responsive">
                 <table class="table table-striped">
@@ -232,6 +257,30 @@
                   </c:forEach>
                   </tbody>
                 </table>
+
+                <!-- 分页管理 -->
+                <nav>
+                  <ul class="pagination">
+                    <li>
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                <!-- 分页管理 -->
+              </div>
+
             </c:when>
             <c:when test="${mainType == 3}">
               <h2 class="sub-header">订单管理</h2>
@@ -271,34 +320,32 @@
                   </c:forEach>
                   </tbody>
                 </table>
-            </c:when>
-          </c:choose>
-          <c:choose >
-            <c:when test="${totalPage > 1}">
-              <!-- 分页管理 -->
-              <nav>
-                <ul class="pagination">
-                  <li>
-                    <a href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <c:forEach var="i" begin="1" end="${totalPage}">
-                    <%--<li><a href="#">${i}</a></li>--%>
-                    <li><a href="/care/web/admin/index/${mainType}/${i}">${i}</a></li>
-                  </c:forEach>
-                  <li>
-                    <a href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-              <!-- 分页管理 -->
-            </c:when>
-          </c:choose>
 
-          </div>
+                <!-- 分页管理 -->
+                <nav>
+                  <ul class="pagination">
+                    <li>
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                <!-- 分页管理 -->
+              </div>
+
+            </c:when>
+          </c:choose>
           <!-- 订单管理 end -->
         </div>
       </div>

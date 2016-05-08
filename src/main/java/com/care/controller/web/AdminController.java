@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by nujian on 16/3/4.
@@ -34,24 +36,62 @@ public class AdminController {
         }
         final Integer initPage = 1;
         final Integer initCount = 10;
+        Integer totalPage = null;
         if(type != null){
             model.addAttribute("mainType",type);
             switch (type){
                 case 1:
                     model.addAttribute("users",userService.findUsers(initPage,initCount));
+                    totalPage = userService.findUserTotalPage(initCount);
                     break;
                 case 2:
                     model.addAttribute("orders",orderService.findOrders(initPage,initCount));
+                    totalPage = orderService.findOrderTotalPage(initCount);
                     break;
                 case 3:
                     model.addAttribute("cashes",userService.findUnhandelUserCashLog(initPage,initCount));
+                    totalPage = userService.findCashTotalPage(initCount);
                     break;
                 default:
                     break;
             }
         }
+        model.addAttribute("totalPage",totalPage);
         return "admin/main";
     }
+
+
+    @RequestMapping(value = "/index/{mainType}/{page}" ,method = RequestMethod.GET)
+    public String index(HttpSession session,Model model, @PathVariable("mainType") Integer type,
+                        @PathVariable("page") Integer page){
+        if(session.getAttribute("user")==null){
+            return "admin/login";
+        }
+        final Integer initCount = 10;
+        Integer totalPage = null;
+        if(type != null){
+            model.addAttribute("mainType",type);
+            switch (type){
+                case 1:
+                    model.addAttribute("users",userService.findUsers(page,initCount));
+                    totalPage = userService.findUserTotalPage(initCount);
+                    break;
+                case 2:
+                    model.addAttribute("orders",orderService.findOrders(page,initCount));
+                    totalPage = orderService.findOrderTotalPage(initCount);
+                    break;
+                case 3:
+                    model.addAttribute("cashes",userService.findUnhandelUserCashLog(page,initCount));
+                    totalPage = userService.findCashTotalPage(initCount);
+                    break;
+                default:
+                    break;
+            }
+        }
+        model.addAttribute("totalPage",totalPage);
+        return "admin/main";
+    }
+
 
     @RequestMapping(value = "/login" ,method = RequestMethod.POST)
     public String login(User user,HttpSession session,Model model){
