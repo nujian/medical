@@ -39,8 +39,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="http://v3.bootcss.com/examples/dashboard/#">用户:${user.username}</a></li>
-            <li><a href="http://v3.bootcss.com/examples/dashboard/#">退出登录</a></li>
+            <li><a href="#">用户:${user.username}</a></li>
+            <li><a href="/care/web/admin/logout">退出登录</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
@@ -70,6 +70,11 @@
                     <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>提现管理
                   </a>
                 </li>
+                <li>
+                  <a href="http://www.umeng.com/">
+                    <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>项目统计
+                  </a>
+                </li>
               </c:when>
               <c:when test="${mainType==2}">
                 <li>
@@ -85,6 +90,11 @@
                 <li>
                   <a href="/care/web/admin/index/3">
                     <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>提现管理
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.umeng.com/">
+                    <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>项目统计
                   </a>
                 </li>
               </c:when>
@@ -104,6 +114,11 @@
                     <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>提现管理
                   </a>
                 </li>
+                <li>
+                  <a href="http://www.umeng.com/">
+                    <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>项目统计
+                  </a>
+                </li>
               </c:when>
               <c:otherwise>
                 <li class="active">
@@ -121,98 +136,235 @@
                     <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>提现管理
                   </a>
                 </li>
+                <li>
+                  <a href="http://www.umeng.com/">
+                    <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>项目统计
+                  </a>
+                </li>
               </c:otherwise>
             </c:choose>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <!-- 订单统计 start -->
-          <h2 class="page-header">订单统计</h2>
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>昨日订单<span class="badge">42</span></h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>昨日订单<span class="badge">42</span></h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <h4>昨日订单<span class="badge">42</span></h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <%--<img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">--%>
-              <h4>昨日订单<span class="badge">42</span></h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </div>
-          <!-- 订单统计end -->
+         <!-- 数据统计 start -->
+           <c:choose>
+                <c:when test="${mainType==1}">
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                  <h2 class="page-header">用户统计</h2>
+                  <div class="row placeholders">
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                      <h4>新增用户<span class="badge">42</span></h4>
+                      <span class="text-muted">Something else</span>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                      <h4>新增护士<span class="badge">42</span></h4>
+                      <span class="text-muted">Something else</span>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                      <h4>昨日订单<span class="badge">42</span></h4>
+                      <span class="text-muted">Something else</span>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                        <%--<img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">--%>
+                      <h4>昨日订单<span class="badge">42</span></h4>
+                      <span class="text-muted">Something else</span>
+                    </div>
+                  </div>
+              </c:when>
+              <c:when test="${mainType==2}">
+                  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    <h2 class="page-header">订单统计</h2>
+                    <div class="row placeholders">
+                      <div class="col-xs-6 col-sm-3 placeholder">
+                        <h4>今日订单<span class="badge">42</span></h4>
+                        <span class="text-muted">Something else</span>
+                      </div>
+                      <div class="col-xs-6 col-sm-3 placeholder">
+                        <h4>昨日订单<span class="badge">42</span></h4>
+                        <span class="text-muted">Something else</span>
+                      </div>
+                      <div class="col-xs-6 col-sm-3 placeholder">
+                        <h4>上周订单<span class="badge">42</span></h4>
+                        <span class="text-muted">Something else</span>
+                      </div>
+                      <div class="col-xs-6 col-sm-3 placeholder">
+                          <%--<img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">--%>
+                        <h4>上月订单<span class="badge">42</span></h4>
+                        <span class="text-muted">Something else</span>
+                      </div>
+                   </div>
+              </c:when>
+            </c:choose>
+          <!-- 数据统计end -->
 
 
           <!-- 订单管理 start  -->
-          <h2 class="sub-header">订单管理</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>订单ID </th>
-                  <th>下单人</th>
-                  <th>接单人</th>
-                  <th>订单金额</th>
-                  <th>订单状态</th>
-                  <th>处理订单</th>
-                </tr>
-              </thead>
-              <tbody>
+          <c:choose>
+            <c:when test="${mainType == 1}">
+                  <!-- -->
+                  <h2 class="sub-header">用户管理</h2>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                      <tr>
+                        <th>用户Id </th>
+                        <th>用户名称</th>
+                        <th>用户类型</th>
+                        <th>联系电话</th>
+                        <th>处理订单</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <c:forEach items="${users}" var="user">
+                        <tr>
+                          <td>${user.id}</td>
+                          <td>${user.username}</td>
+                          <td>${user.userType}</td>
+                          <td>${user.mobile}</td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                处理
+                                <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#">停单</a></li>
+                                <li><a href="#">解封</a></li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      </c:forEach>
+                      </tbody>
+                    </table>
 
-              <c:forEach items="${orders}" var="order">
-                <tr>
-                  <td>${order.id}</td>
-                  <td>${order.user.username}</td>
-                  <td>${order.nurse.username}</td>
-                  <td>${order.cost}</td>
-                  <td>${order.status}</td>
-                  <td>
-                    <div class="dropdown">
-                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        处理
-                        <span class="caret"></span>
-                      </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">修改订单</a></li>
-                        <li><a href="#">删除订单</a></li>
+                    <!-- 分页管理 -->
+                    <nav>
+                      <ul class="pagination">
+                        <li>
+                          <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                          <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
                       </ul>
+                    </nav>
+                    <!-- 分页管理 -->
+
                     </div>
-                  </td>
-                </tr>
-              </c:forEach>
-              </tbody>
-            </table>
+                    <!-- -->
+            </c:when>
+            <c:when test="${mainType == 2}">
+                  <h2 class="sub-header">订单管理</h2>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                      <tr>
+                        <th>订单ID </th>
+                        <th>下单人</th>
+                        <th>接单人</th>
+                        <th>订单金额</th>
+                        <th>订单状态</th>
+                        <th>处理订单</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <c:forEach items="${orders}" var="order">
+                        <tr>
+                          <td>${order.id}</td>
+                          <td>${order.user.username}</td>
+                          <td>${order.nurse.username}</td>
+                          <td>${order.cost}</td>
+                          <td>${order.status}</td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                处理
+                                <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#">修改订单</a></li>
+                                <li><a href="#">删除订单</a></li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      </c:forEach>
+                      </tbody>
+                    </table>
 
-            <!-- 分页管理 -->
-            <nav>
-              <ul class="pagination">
-                <li>
-                  <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                  <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+                    <!-- 分页管理 -->
+                    <nav>
+                      <ul class="pagination">
+                        <li>
+                          <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                          <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                    <!-- 分页管理 -->
 
-            <!-- 分页管理 -->
-          </div>
+                    </div>
+            </c:when>
+            <c:when test="${mainType == 3}">
+                    <%--<h2 class="sub-header">提现管理</h2>--%>
+                    <%--<div class="table-responsive">--%>
+                      <%--<table class="table table-striped">--%>
+                        <%--<thead>--%>
+                        <%--<tr>--%>
+                          <%--<th>订单ID </th>--%>
+                          <%--<th>下单人</th>--%>
+                          <%--<th>接单人</th>--%>
+                          <%--<th>订单金额</th>--%>
+                          <%--<th>订单状态</th>--%>
+                          <%--<th>处理订单</th>--%>
+                        <%--</tr>--%>
+                        <%--</thead>--%>
+                        <%--<tbody>--%>
+                        <%--<c:forEach items="${orders}" var="order">--%>
+                          <%--<tr>--%>
+                            <%--<td>${order.id}</td>--%>
+                            <%--<td>${order.user.username}</td>--%>
+                            <%--<td>${order.nurse.username}</td>--%>
+                            <%--<td>${order.cost}</td>--%>
+                            <%--<td>${order.status}</td>--%>
+                            <%--<td>--%>
+                              <%--<div class="dropdown">--%>
+                                <%--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">--%>
+                                  <%--处理--%>
+                                  <%--<span class="caret"></span>--%>
+                                <%--</button>--%>
+                                <%--<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">--%>
+                                  <%--<li><a href="#">修改订单</a></li>--%>
+                                  <%--<li><a href="#">删除订单</a></li>--%>
+                                <%--</ul>--%>
+                              <%--</div>--%>
+                            <%--</td>--%>
+                          <%--</tr>--%>
+                        <%--</c:forEach>--%>
+                        <%--</tbody>--%>
+                      <%--</table>--%>
+            </c:when>
+          </c:choose>
           <!-- 订单管理 end -->
         </div>
       </div>

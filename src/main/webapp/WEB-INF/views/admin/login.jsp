@@ -27,7 +27,7 @@
   <body>
     <div class="container">
       <form class="form-signin" action="/care/web/admin/login" method="post">
-          <h2 class="form-signin-heading">医疗项目管理后台</h2><br/>
+          <h2 class="form-signin-heading">寸草心管理后台</h2><br/>
           <label for="inputMobile" class="sr-only">手机号码</label>
           <input type="number" id="inputMobile" class="form-control" placeholder="请输入手机号码" required="" autofocus="" name="mobile"><br/>
           <label for="inputPassword" class="sr-only">密码</label>

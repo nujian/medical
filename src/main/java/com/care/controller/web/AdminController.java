@@ -70,4 +70,12 @@ public class AdminController {
         }
         return "admin/login";
     }
+
+    @RequestMapping(value = "/logout")
+    public String logout(HttpSession session){
+        if(session.getAttribute("user") != null){
+            session.setAttribute("user",null);
+        }
+        return "admin/login";
+    }
 }
