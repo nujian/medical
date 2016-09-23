@@ -573,11 +573,11 @@
             <version>1.1.37</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.yinlian</groupId>
-            <artifactId>bcprov-jdk16</artifactId>
-            <version>1</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.yinlian</groupId>-->
+            <!--<artifactId>bcprov-jdk16</artifactId>-->
+            <!--<version>1</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.yinlian</groupId>
